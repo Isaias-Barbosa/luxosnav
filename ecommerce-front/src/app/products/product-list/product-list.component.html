@@ -1,0 +1,15 @@
+<div class="container mt-4">
+  <h2>Produtos</h2>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let produto of produtos">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ produto.nome }}</h5>
+          <p class="card-text">{{ produto.descricao }}</p>
+          <p class="card-text"><strong>R$ {{ produto.preco | number:'1.2-2' }}</strong></p>
+          <button class="btn btn-primary">Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
