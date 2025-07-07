@@ -5,14 +5,21 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './auth/jwt.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
-    AppComponent // ✅ Aqui está certo
+    AppComponent, // ✅ Aqui está certo
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+     CommonModule,
     HttpClientModule // ✅ Aqui também
     
   ],

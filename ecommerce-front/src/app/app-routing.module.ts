@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
+
+  { path: '', component: HomeComponent }, // ✅ Home pública
+
     {
     path: 'produtos',
     loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
@@ -12,15 +17,10 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
-  {
-    path: '',
-    redirectTo: 'auth/login',
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    redirectTo: 'auth/login'
-  }
+   { path: 'auth/login', component: LoginComponent },
+
+   { path: '**', redirectTo: '' } // fallback
+
 ];
 
 

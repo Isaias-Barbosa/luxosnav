@@ -24,12 +24,17 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login(): void {
-    if (this.form.valid) {
-      this.authService.login(this.form.value).subscribe({
-        next: () => this.router.navigate(['/produtos']),
-       error: err => alert('Login inválido')
-      });
+onSubmit(): void {
+  if (this.form.invalid) return;
+
+  const credentials = this.form.value;
+  this.authService.login(credentials).subscribe({
+    next: () => this.router.navigate(['/produtos']),
+    error: err => {
+      console.error('Erro no login:', err);
+      alert('Usuário ou senha inválidos');
     }
-  }
+  });
+}
+
 }

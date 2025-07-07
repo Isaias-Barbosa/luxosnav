@@ -8,7 +8,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import org.springframework.lang.NonNull;
+import ecommerce.service.TokenService;
+
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,41 +19,42 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter{
-    private final JwtUtil jwtUtil;
+      private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
-        this.jwtUtil = jwtUtil;
+    public JwtAuthFilter(TokenService tokenService, UserDetailsService userDetailsService) {
+        this.tokenService = tokenService;
         this.userDetailsService = userDetailsService;
     }
 
     @Override
-    protected void doFilterInternal(
-                                    @NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain)
-                                    throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Authorization");
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            String username = jwtUtil.getUsername(token);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        final String token = authHeader.substring(7);
+        final String username = tokenService.getUsernameFromToken(token);
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (tokenService.isTokenValid(token)) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-                if (jwtUtil.validarToken(token)) {
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
 
         filterChain.doFilter(request, response);
     }
-
 }
+
