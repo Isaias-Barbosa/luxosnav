@@ -31,8 +31,8 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              
+            "styles": [         
+               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
                "src/styles.scss"
 
             ]

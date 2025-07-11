@@ -1,0 +1,31 @@
+<section class="mt-16 px-4 sm:px-8 bg-gray-900 text-white py-10 rounded-xl shadow-lg">
+  <!-- Título -->
+  <h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center tracking-wide">
+    Luxo & Elegância ✨
+  </h2>
+
+  <!-- Carrossel horizontal -->
+  <div class="flex gap-2 overflow-x-auto pb-4 scroll-smooth justify-between">
+    <div
+      *ngFor="let produto of produtos"
+      class="min-w-[320px] bg-gray-800 rounded-lg shadow-sm p-4 flex-shrink-0"
+    >
+      <img
+        [src]="produto.imagem"
+        [alt]="produto.nome"
+        class="h-64 w-full object-cover rounded mb-3"
+      />
+      <h3 class="text-sm font-semibold text-white mb-1">{{ produto.nome }}</h3>
+      <p class="text-sm text-gray-300 mb-2">{{ produto.descricao }}</p>
+      <div class="flex items-center justify-between">
+        <span class="text-yellow-400 font-bold">R$ {{ produto.preco }}</span>
+        <button
+          class="flex items-center gap-1 text-sm text-white bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded transition"
+        >
+          <i class="bi bi-cart-plus"></i>
+          Comprar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

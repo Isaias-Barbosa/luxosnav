@@ -1,0 +1,49 @@
+<nav class="bg-white px-6 py-2 shadow-sm">
+  <div class="flex items-center justify-between w-full">
+    <!-- 🍔 Departamentos à esquerda -->
+    <div class="relative group">
+      <button class="flex items-center gap-2 text-gray-700 font-medium">
+        <i class="bi bi-list text-lg"></i>
+        Departamentos
+      </button>
+      <ul
+        class="absolute border-red-100 left-0 mt-2 w-48 bg-white border rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 text-sm">
+        <li class="hover:text-blue-500"><a href="#" class="block px-4 py-2 hover:bg-gray-100">Roupas</a></li>
+        <li class="hover:text-blue-500"><a href="#" class="block px-4 py-2 hover:bg-gray-100">Calçados</a></li>
+        <li class="hover:text-blue-500"><a href="#" class="block px-4 py-2 hover:bg-gray-100">Acessórios</a></li>
+
+        <!-- 🔐 Lógica de login -->
+        <ng-container *ngIf="!authService.isLoggedIn(); else contaLink">
+          <li>
+            <a routerLink="/auth/login" class="block px-4 py-2 hover:bg-gray-100 text-blue-600 font-medium">
+              Entrar na Conta
+            </a>
+          </li>
+        </ng-container>
+        <ng-template #contaLink>
+          <li>
+            <a routerLink="/minha-conta" class="block px-4 py-2 hover:bg-gray-100 text-green-600 font-medium">
+              Minha Conta
+            </a>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+
+    <!-- 🧭 Links centralizados -->
+   <div class="flex-1 flex justify-center">
+      <div class="flex gap-14 text-sm font-medium text-gray-700">
+        <a href="#" class="hover:text-blue-600">Coleção Inverno</a>
+        <a href="#" class="hover:text-blue-600">Na Moda</a>
+        <a href="#" class="hover:text-blue-600">Em Alta</a>
+        <a href="#" class="hover:text-blue-600">Running</a>
+        <a href="#" class="hover:text-blue-600">Acessórios</a>
+        <a href="#" class="hover:text-blue-600">Promoções</a>
+        <a href="#" class="hover:text-blue-600">Esportes</a>
+      </div>
+    </div>
+
+    <!-- Espaço à direita -->
+    <div class="w-[120px]"></div>
+  </div>
+</nav>

@@ -1,0 +1,29 @@
+<section class="mt-12 px-4 sm:px-8 overflow-hidden">
+  <!-- Título -->
+  <h2 class="text-center text-2xl sm:text-3xl font-semibold mb-8">
+    Nossas marcas parceiras
+  </h2>
+
+  <!-- Carrossel infinito -->
+  <div class="relative w-full">
+    <div class="animate-slide flex gap-6 w-max ">
+      <div
+        *ngFor="let marca of marcas"
+        class="bg-white border rounded-lg shadow-sm p-4 flex flex-col items-center w-32 "
+      >
+        <img [src]="marca.imagem" [alt]="marca.nome" class="h-10 object-contain mb-2" />
+        <span class="text-sm font-medium text-gray-700 text-center">{{ marca.nome }}</span>
+      </div>
+
+      <!-- Repetir marcas para loop visual -->
+      <ng-container *ngFor="let marca of marcas ">
+        <div
+          class="bg-white border rounded-lg shadow-sm p-4 flex flex-col items-center w-32"
+        >
+          <img [src]="marca.imagem" [alt]="marca.nome" class="h-10 object-contain mb-2" />
+          <span class="text-sm font-medium text-gray-700 text-center">{{ marca.nome }}</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>
