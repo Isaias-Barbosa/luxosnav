@@ -8,6 +8,7 @@ const routes: Routes = [
     path: '',
     component: HomeComponent // Página inicial
   },
+  
   {
     path: 'produtos',
     loadChildren: () =>
