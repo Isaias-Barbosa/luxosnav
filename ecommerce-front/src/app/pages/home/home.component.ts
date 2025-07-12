@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { SubnavbarComponent } from '../../shared/subnavbar/subnavbar.component';
@@ -12,6 +12,9 @@ import { SectionPromocoesComponent } from '../../home/section-promocoes/section-
 import { MarcasComponent } from '../../shared/marcas/marcas.component';
 import { BannerComponent } from '../../shared/banner/banner.component';
 import { SectionMaisVendidosComponent } from '../../home/section-mais-vendidos/section-mais-vendidos.component';
+import { Product } from '../../models/product.models';
+import { ProductApiService } from '../../services/product-api.service';
+import { ProductCardComponent } from '../../shared/product-card/product-card.component';
 
 @Component({
   selector: 'app-home',
@@ -30,43 +33,23 @@ import { SectionMaisVendidosComponent } from '../../home/section-mais-vendidos/s
     SectionLuxoEleganciaComponent,
     SectionInvernoComponent,
     SectionPromocoesComponent,
+    ProductCardComponent,
 
   ],
 
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
-  produtos = [
-    {
-      nome: 'Tênis Esportivo X',
-      preco: 199.99,
-      imagem: 'https://cdn.dooca.store/1816/products/227188-1600-auto_640x640+fill_ffffff.jpg?v=1625711419&webp=0'
-    },
-    {
-      nome: 'Camisa Casual Y',
-      preco: 89.90,
-      imagem: 'https://rsv-ink-images.ink.rsvcloud.com/images/product_art/final_image/520f509c4b220fd4d9516ecdc7cad2fb.webp'
-    },
-    {
-      nome: 'Jaqueta Urbana Z',
-      preco: 249.90,
-      imagem: 'https://m.media-amazon.com/images/I/41o3KYuWN1L._SY1000_.jpg'
-    },
-    {
-      nome: 'Tênis Branco Clean',
-      preco: 179.99,
-      imagem: 'https://source.unsplash.com/featured/?white-shoes'
-    },
-    {
-      nome: 'Calça Jeans Slim',
-      preco: 129.90,
-      imagem: 'https://source.unsplash.com/featured/?jeans'
-    },
-    {
-      nome: 'Mochila Estilosa',
-      preco: 149.90,
-      imagem: 'https://source.unsplash.com/featured/?backpack'
-    }
-  ];
+export class HomeComponent implements OnInit {
+  produtos: Product[] = [];
+  loading = true;
+
+  constructor(private productService: ProductApiService) {}
+
+  ngOnInit(): void {
+    this.productService.getAll().subscribe(data => {
+      this.produtos = data;
+      this.loading = false;
+    });
+  }
 }
