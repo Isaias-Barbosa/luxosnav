@@ -1,10 +1,21 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from './auth/services/auth.service';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { SubnavbarComponent } from './shared/subnavbar/subnavbar.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [
+    RouterModule,
+    NavbarComponent,
+    SubnavbarComponent,
+    FooterComponent
+  ],
+
   templateUrl: './app.component.html'
 })
 

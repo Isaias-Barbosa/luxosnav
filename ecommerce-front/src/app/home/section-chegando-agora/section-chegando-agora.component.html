@@ -6,12 +6,12 @@
   <div class="flex gap-2 overflow-x-auto pb-4 scroll-smooth justify-between">
     <div
       *ngFor="let produto of produtos"
-      class="min-w-[320px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0"
+      class="min-w-[320px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0 overflow-hidden"
     >
       <img
         [src]="produto.imagem"
         [alt]="produto.nome"
-        class="h-64 w-full object-cover rounded mb-3"
+        class="h-64 w-full object-cover rounded mb-3 transition-transform duration-300 hover:scale-105"
       />
       <h3 class="text-sm font-semibold text-gray-800">{{ produto.nome }}</h3>
       <p class="text-sm text-gray-500 mb-1">{{ produto.descricao }}</p>

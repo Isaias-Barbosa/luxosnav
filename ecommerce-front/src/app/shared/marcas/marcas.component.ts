@@ -1,7 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-marcas',
+  standalone: true,
+  imports: [CommonModule],
+
   templateUrl: './marcas.component.html',
   styleUrl: './marcas.component.scss'
 })

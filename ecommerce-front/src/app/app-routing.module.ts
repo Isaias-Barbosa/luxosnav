@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
+import { ProdutoDetailsComponent } from './components/produto-details/produto-details.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./auth/auth.module').then(m => m.AuthModule) // Carrega módulo de autenticação
   },
+  { path: 'produto/:id', component: ProdutoDetailsComponent },
   {
     path: '**',
     redirectTo: ''

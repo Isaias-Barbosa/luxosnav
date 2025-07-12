@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+<app-subnavbar></app-subnavbar>
+
+<div *ngIf="loading" class="text-center py-10">Carregando produto...</div>
+
+<div *ngIf="!loading" class="max-w-5xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-14">
+  <!-- Imagem -->
+  <div class="flex justify-center items-center">
+    <img [src]="product.image" [alt]="product.title" class="max-h-[400px] object-contain" />
+  </div>
+
+  <!-- Informações -->
+  <div class="flex flex-col justify-center space-y-8">
+    <h1 class="text-2xl font-bold text-gray-800">{{ product.title }}</h1>
+    <p class="text-lg text-gray-600">Categoria: {{ product.category }}</p>
+    <p class="text-3xl font-semibold text-blue-600">R$ {{ product.price | number:'1.2-2' }}</p>
+    <p class="text-gray-700 leading-relaxed">{{ product.description }}</p>
+
+    <!-- Avaliação -->
+    <div class="flex items-center gap-2 text-sm text-yellow-500">
+      <i class="bi bi-star-fill"></i>
+      {{ product.rating.rate }} ({{ product.rating.count }} avaliações)
+    </div>
+
+    <!-- Botão -->
+    <button class="mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+      Adicionar ao Carrinho
+    </button>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,14 +1,13 @@
+<app-navbar></app-navbar>
+<app-subnavbar></app-subnavbar>
 
+<!-- conteúdo da vitrine aqui -->
+<app-banner></app-banner>
+<app-marcas></app-marcas>
+<app-section-inverno></app-section-inverno>
+<app-section-mais-vendidos></app-section-mais-vendidos>
+<app-section-promocoes></app-section-promocoes>
+<app-section-chegando-agora></app-section-chegando-agora>
+<app-section-luxo-elegancia></app-section-luxo-elegancia>
 
-<!-- Produtos em destaque -->
-<section class="py-10 px-6">
-  <h3 class="text-2xl font-semibold mb-6 text-center">Produtos em Destaque</h3>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    <div *ngFor="let produto of produtos" class="border rounded shadow p-4 flex flex-col items-center">
-      <img [src]="produto.imagem" alt="Produto" class="w-full h-48 object-cover mb-4 rounded" />
-      <h4 class="text-lg font-semibold">{{ produto.nome }}</h4>
-      <p class="text-gray-600 mb-2">R$ {{ produto.preco }}</p>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Comprar</button>
-    </div>
-  </div>
-</section>
+<app-footer></app-footer>

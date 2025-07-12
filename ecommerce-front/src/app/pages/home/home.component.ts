@@ -1,10 +1,38 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { SubnavbarComponent } from '../../shared/subnavbar/subnavbar.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SectionChegandoAgoraComponent } from '../../home/section-chegando-agora/section-chegando-agora.component';
+import { SectionLuxoEleganciaComponent } from '../../home/section-luxo-elegancia/section-luxo-elegancia.component';
+import { SectionInvernoComponent } from '../../home/section-inverno/section-inverno.component';
+import { SectionPromocoesComponent } from '../../home/section-promocoes/section-promocoes.component';
+import { MarcasComponent } from '../../shared/marcas/marcas.component';
+import { BannerComponent } from '../../shared/banner/banner.component';
+import { SectionMaisVendidosComponent } from '../../home/section-mais-vendidos/section-mais-vendidos.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-   imports: [CommonModule],
+   imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NavbarComponent,
+    SubnavbarComponent,
+    BannerComponent,
+    FooterComponent,
+    MarcasComponent,
+    SectionChegandoAgoraComponent,
+    SectionMaisVendidosComponent,
+    SectionLuxoEleganciaComponent,
+    SectionInvernoComponent,
+    SectionPromocoesComponent,
+
+  ],
+
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

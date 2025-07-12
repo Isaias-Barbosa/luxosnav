@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-section-inverno',
+  standalone: true,
+   imports: [CommonModule],
   templateUrl: './section-inverno.component.html',
   styleUrl: './section-inverno.component.scss'
 })

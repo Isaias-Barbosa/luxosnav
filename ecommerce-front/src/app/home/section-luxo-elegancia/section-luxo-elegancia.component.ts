@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-section-luxo-elegancia',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './section-luxo-elegancia.component.html',
   styleUrl: './section-luxo-elegancia.component.scss'
 })
