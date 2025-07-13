@@ -1,19 +1,17 @@
- <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-<div class="relative rounded-lg overflow-hidden shadow-md group">
-<a [routerLink]="['/produto', produto.id]" class="min-w-[300px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0 hover:shadow-md transition">
-  <img
-    [src]="produto.image"
-    [alt]="produto.title"
-    class="w-full h-[300px] object-cover transform transition-transform duration-500 group-hover:scale-105"
-  />
-  <h3 class="text-sm font-semibold text-gray-800 line-clamp-2">{{ produto.title }}</h3>
-  <p class="text-sm text-gray-500 mb-1">{{ produto.category }}</p>
-  <div class="flex items-center justify-between mt-4">
-    <span class="text-blue-600 font-bold">R$ {{ produto.price.toFixed(2) }}</span>
-    <button class="flex items-center gap-1 text-base text-white bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded transition">
-      <i class="bi bi-cart-plus"></i> Comprar
-    </button>
-  </div>
-</a>
-</div>
+<div class="min-w-[320px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0 transition overflow-hidden hover:shadow-md">
+  <a [routerLink]="['/produto', produto.id]" class="group block">
+    <img
+      [src]="produto.imagem"
+      [alt]="produto.nome"
+      class="h-64 w-full object-contain rounded mb-3 transform transition-transform duration-500 group-hover:scale-105"
+    />
+    <h3 class="text-sm font-semibold text-gray-800 line-clamp-1">{{ produto.nome }}</h3>
+    <p class="text-sm text-gray-500 mb-1">{{ produto.categoria }}</p>
+    <div class="flex items-center justify-between mt-4">
+      <span class="text-blue-600 font-bold">R$ {{ produto.preco.toFixed(2) }}</span>
+      <button class="flex items-center gap-1 text-base text-white bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded transition">
+        <i class="bi bi-cart-plus"></i> Comprar
+      </button>
+    </div>
+  </a>
 </div>

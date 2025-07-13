@@ -3,29 +3,187 @@
 
 <div *ngIf="loading" class="text-center py-10">Carregando produto...</div>
 
-<div *ngIf="!loading" class="max-w-5xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-14">
-  <!-- Imagem -->
-  <div class="flex justify-center items-center">
-    <img [src]="product.image" [alt]="product.title" class="max-h-[400px] object-contain" />
+<div
+  *ngIf="!loading"
+  class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-2 gap-10"
+>
+  <!-- Imagens -->
+  <div>
+    <img
+      [src]="imagemSelecionada"
+      alt="Imagem principal"
+      class="w-full h-[480px] object-cover rounded shadow mb-4"
+    />
+
+    <!-- Miniaturas -->
+    <div class="flex gap-3 overflow-x-auto">
+      <img
+        *ngFor="let img of product.imagens"
+        [src]="img"
+        (click)="imagemSelecionada = img"
+        class="h-20 w-20 object-cover border rounded cursor-pointer transition hover:scale-105"
+        [class.border-blue-600]="imagemSelecionada === img"
+      />
+    </div>
   </div>
 
   <!-- Informações -->
-  <div class="flex flex-col justify-center space-y-8">
-    <h1 class="text-2xl font-bold text-gray-800">{{ product.title }}</h1>
-    <p class="text-lg text-gray-600">Categoria: {{ product.category }}</p>
-    <p class="text-3xl font-semibold text-blue-600">R$ {{ product.price | number:'1.2-2' }}</p>
-    <p class="text-gray-700 leading-relaxed">{{ product.description }}</p>
+  <div class="space-y-4">
+    <h1 class="text-3xl font-bold text-gray-800">{{ product.nome }}</h1>
+    <p class="text-red-600 font-medium text-sm">{{ product.categoria }}</p>
+    <p class="text-gray-900 font-medium text-sm">{{ product.descricao }}</p>
+    <p class="text-2xl text-blue-600 font-bold">
+      R$ {{ product.preco.toFixed(2) }}
+    </p>
 
-    <!-- Avaliação -->
-    <div class="flex items-center gap-2 text-sm text-yellow-500">
-      <i class="bi bi-star-fill"></i>
-      {{ product.rating.rate }} ({{ product.rating.count }} avaliações)
+    <!-- Seleção de tamanho -->
+    <div *ngIf="product.tamanhosDisponiveis?.length" class="space-y-2">
+      <p class="font-medium text-sm text-gray-700">Tamanho:</p>
+      <div class="flex gap-2 flex-wrap">
+        <button
+          *ngFor="let t of product.tamanhosDisponiveis"
+          (click)="tamanhoSelecionado = t"
+          class="px-3 py-1 border rounded hover:bg-blue-600 hover:text-white transition text-sm"
+          [class.bg-blue-600]="tamanhoSelecionado === t"
+          [class.text-white]="tamanhoSelecionado === t"
+        >
+          {{ t }}
+        </button>
+      </div>
     </div>
 
-    <!-- Botão -->
-    <button class="mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-      Adicionar ao Carrinho
-    </button>
+    <!-- Simulador de frete -->
+    <div class="space-y-2 mt-4 max-w-sm">
+      <label for="cep" class="block text-sm font-medium text-gray-700"
+        >Simular frete:</label
+      >
+      <input
+        id="cep"
+        [(ngModel)]="cep"
+        type="text"
+        maxlength="9"
+        placeholder="Digite seu CEP"
+        class="border px-4 py-2 rounded w-full"
+      />
+      <button
+        (click)="calcularFrete()"
+        class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900 transition w-full"
+        [disabled]="carregandoFrete"
+      >
+        <ng-container *ngIf="carregandoFrete; else textoBotao">
+          <span class="animate-pulse">Calculando...</span>
+        </ng-container>
+        <ng-template #textoBotao>Calcular Entrega</ng-template>
+      </button>
+      <div *ngIf="valorFrete" class="text-sm text-gray-700 mt-1">
+        Frete estimado: <strong>R$ {{ valorFrete.toFixed(2) }}</strong> (prazo:
+        5 dias úteis)
+      </div>
+    </div>
+
+    <!-- Botões de compra -->
+    <div class="flex flex-wrap gap-4 mt-4">
+      <button
+        (click)="comprarAgora()"
+        class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition font-medium"
+        [disabled]="carregandoCompra"
+      >
+        <ng-container *ngIf="carregandoCompra; else textoComprar">
+          <span class="animate-pulse">Processando...</span>
+        </ng-container>
+        <ng-template #textoComprar>Comprar Agora</ng-template>
+      </button>
+
+      <button
+        (click)="adicionarCarrinho()"
+        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition font-medium"
+        [disabled]="adicionadoCarrinho"
+      >
+        <ng-container *ngIf="adicionadoCarrinho; else textoCarrinho">
+          <span class="text-white">✓ Adicionado</span>
+        </ng-container>
+        <ng-template #textoCarrinho>Adicionar ao Carrinho</ng-template>
+      </button>
+    </div>
   </div>
 </div>
+
+<!-- Seções abaixo do grid principal -->
+
+<!-- Produtos semelhantes -->
+<div class="max-w-6xl mx-auto px-4 py-12">
+  <h2 class="text-xl font-semibold mb-6">Produtos Semelhantes</h2>
+  <div class="flex gap-4 overflow-x-auto">
+    <a
+      *ngFor="let similar of produtosSemelhantes"
+      [routerLink]="['/produto', similar.id]"
+      class="min-w-[240px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0 hover:shadow-md transition block"
+    >
+      <img
+        [src]="similar.imagem"
+        [alt]="similar.nome"
+        class="h-48 w-full object-cover rounded mb-2"
+      />
+      <h3 class="text-sm font-semibold text-gray-800">{{ similar.nome }}</h3>
+      <p class="text-sm text-gray-500">{{ similar.descricao }}</p>
+      <p class="text-blue-600 font-bold mt-1">
+        R$ {{ similar.preco.toFixed(2) }}
+      </p>
+    </a>
+  </div>
+</div>
+
+<!-- Descrição do Produto -->
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-xl font-semibold mb-4">Descrição do Produto</h2>
+  <p class="text-gray-700 leading-relaxed">{{ product.descricaoCompleta }}</p>
+</div>
+
+<!-- Informações Técnicas -->
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-xl font-semibold mb-4">Informações Técnicas</h2>
+  <ul class="grid md:grid-cols-2 gap-4">
+    <li *ngFor="let info of product.informacoesTecnicas">
+      <span class="font-semibold text-gray-800">{{ info.titulo }}:</span>
+      <span class="text-gray-600"> {{ info.valor }}</span>
+    </li>
+  </ul>
+</div>
+
+<!-- Avaliações dos Usuários -->
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-xl font-semibold mb-4">Avaliações dos Usuários</h2>
+  <div
+    *ngFor="let av of product.avaliacoes"
+    class="border rounded p-4 mb-4 bg-white shadow-sm"
+  >
+    <p class="font-semibold text-gray-800 mb-1">
+      {{ av.nome }} — ⭐ {{ av.nota }}/5
+    </p>
+    <p class="text-gray-700">{{ av.comentario }}</p>
+  </div>
+</div>
+
+<!-- Troca e Garantia -->
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-xl font-semibold mb-4">Troca e Garantia</h2>
+  <ul class="list-disc list-inside text-gray-700 space-y-2">
+    <li>Prazo de troca: até 30 dias após o recebimento</li>
+    <li>Garantia contra defeitos de fabricação: 90 dias</li>
+    <li>Produto não pode apresentar sinais de uso</li>
+    <li>Solicite a troca pelo nosso SAC via WhatsApp ou formulário</li>
+  </ul>
+</div>
+
+<!-- Cuidados com o Produto -->
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-xl font-semibold mb-4">Cuidados com o Produto</h2>
+  <ul class="list-disc list-inside text-gray-700 space-y-2">
+    <li>Evite exposição prolongada ao sol e umidade</li>
+    <li>Lavar à mão com sabão neutro (especialmente roupas)</li>
+    <li>Não utilizar produtos abrasivos na limpeza</li>
+    <li>Para calçados, guarde em local seco e arejado</li>
+  </ul>
+</div>
+
 <app-footer></app-footer>

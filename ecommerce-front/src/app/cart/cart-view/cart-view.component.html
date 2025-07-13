@@ -1,1 +1,75 @@
-<p>cart-view works!</p>
+<app-navbar></app-navbar>
+<app-subnavbar></app-subnavbar>
+
+<div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
+    <!-- 🛍️ Itens do carrinho (2/3 da largura) -->
+    <div class="md:col-span-2">
+        <h1 class="text-2xl font-bold mb-6">Seu Carrinho 🛒</h1>
+
+        <div *ngIf="cart.length === 0" class="text-gray-600">Seu carrinho está vazio.</div>
+
+        <div *ngFor="let item of cart" class="flex items-center gap-4 mb-6 border-b pb-4">
+            <img [src]="item.imagem" [alt]="item.nome" class="h-24 w-24 object-cover rounded" />
+            <div class="flex-1">
+                <h2 class="text-lg font-semibold">{{ item.nome }}</h2>
+                <p class="text-sm text-gray-500">{{ item.categoria }}</p>
+                <p class="text-blue-600 font-bold mt-1">
+                    R$ {{ item.preco.toFixed(2) }} x {{ item.quantidade || 1 }}
+                </p>
+
+                <!-- Quantidade -->
+                <div class="flex items-center gap-2 mt-2">
+                    <label class="text-sm text-gray-700">Qtd:</label>
+                    <select [(ngModel)]="item.quantidade" (change)="cartService.atualizarQuantidade(item)"
+                        class="border rounded px-2 py-1 text-sm">
+                        <option *ngFor="let q of [1, 2, 3, 4, 5]" [value]="q">{{ q }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <button (click)="removerItem(item.id)" class="text-red-600 hover:underline text-sm">
+                Remover
+            </button>
+        </div>
+    </div>
+
+    <!-- 📦 Resumo do pedido (1/3 da largura) -->
+    <div class="bg-gray-50 p-6 rounded-lg shadow-sm h-fit">
+        <h2 class="text-xl font-semibold mb-4">Resumo</h2>
+
+        <div class="space-y-3 text-sm text-gray-700">
+            <div class="flex justify-between">
+                <span>Subtotal</span>
+                <span>R$ {{ subtotal.toFixed(2) }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Transporte</span>
+                <span class="text-green-600 font-medium">Grátis</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Taxa Estimada</span>
+                <span>--</span>
+            </div>
+            <hr />
+            <div class="flex justify-between font-semibold text-gray-900 text-base">
+                <span>Total</span>
+                <span>R$ {{ subtotal.toFixed(2) }}</span>
+            </div>
+        </div>
+
+        <div class="flex gap-4 mt-4">
+            <button [routerLink]="['/pagamento']"
+                class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">
+                Finalizar Compra
+            </button>
+
+            <button [routerLink]="['/']" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                Continuar Comprando
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+<app-footer></app-footer>

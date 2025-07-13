@@ -4,9 +4,10 @@
   </h2>
 
   <div class="flex gap-2 overflow-x-auto pb-4 scroll-smooth justify-between">
-    <div
+    <a
       *ngFor="let produto of produtos"
-      class="min-w-[320px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0 overflow-hidden"
+       [routerLink]="['/produto', produto.id]"
+      class="min-w-[320px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0 overflow-hidden hover:shadow-md transition block"
     >
       <img
         [src]="produto.imagem"
@@ -16,14 +17,13 @@
       <h3 class="text-sm font-semibold text-gray-800">{{ produto.nome }}</h3>
       <p class="text-sm text-gray-500 mb-1">{{ produto.descricao }}</p>
       <div class="flex items-center justify-between mt-2">
-        <span class="text-blue-600 font-bold">R$ {{ produto.preco }}</span>
+        <span class="text-blue-600 font-bold">R$ {{ produto.preco.toFixed(2) }}</span>
         <button
           class="flex items-center gap-1 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded transition"
         >
-          <i class="bi bi-cart-plus"></i>
-          Comprar
+          <i class="bi bi-cart-plus"></i> Comprar
         </button>
       </div>
-    </div>
+ </a>
   </div>
 </section>

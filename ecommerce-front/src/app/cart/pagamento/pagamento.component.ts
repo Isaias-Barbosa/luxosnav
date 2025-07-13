@@ -1,24 +1,36 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
-import { Product } from '../../models/product.models';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { SubnavbarComponent } from '../../shared/subnavbar/subnavbar.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
-import { FormsModule } from '@angular/forms';
+import { Product } from '../../models/product.models';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cart-view',
+  selector: 'app-pagamento',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent, SubnavbarComponent, FooterComponent, FormsModule],
-  templateUrl: './cart-view.component.html',
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    NavbarComponent,
+    SubnavbarComponent,
+    FooterComponent
+  ],
+  templateUrl: './pagamento.component.html',
 })
-export class CartViewComponent {
+export class PagamentoComponent {
   cart: Product[] = [];
   subtotal = 0;
+  cupom = '';
+  desconto = 0;
+  parcelas = 1;
+  
 
-  public constructor(public cartService: CartService) {}
+  constructor(public cartService: CartService, private router: Router) {}
 
 
   ngOnInit(): void {
@@ -28,14 +40,7 @@ export class CartViewComponent {
     });
   }
 
-  removerItem(id: number) {
-    this.cartService.removerProduto(id);
-  }
-
-  cupom = '';
-  desconto = 0;
-
-  validarCupom() {
+  aplicarCupom() {
     if (this.cupom === 'EXEMPLO10') {
       this.desconto = this.subtotal * 0.1;
     } else {
@@ -44,5 +49,9 @@ export class CartViewComponent {
     }
   }
 
-  parcelas = 1;
+ finalizarCompra() {
+  this.router.navigate(['/checkout-form']);
+}
+
+
 }

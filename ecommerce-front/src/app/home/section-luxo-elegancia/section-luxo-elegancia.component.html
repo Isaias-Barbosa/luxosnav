@@ -6,26 +6,25 @@
 
   <!-- Carrossel horizontal -->
   <div class="flex gap-2 overflow-x-auto pb-4 scroll-smooth justify-between">
-    <div
+     <a
       *ngFor="let produto of produtos"
-      class="min-w-[320px] bg-gray-800 rounded-lg shadow-sm p-4 flex-shrink-0 overflow-hidden"
+      [routerLink]="['/produto', produto.id]"
+      class="min-w-[320px] bg-white border rounded-lg shadow-sm p-4 flex-shrink-0 overflow-hidden hover:shadow-md transition block"
     >
       <img
         [src]="produto.imagem"
         [alt]="produto.nome"
         class="h-64 w-full object-cover rounded mb-3 transition-transform duration-300 hover:scale-105"
       />
-      <h3 class="text-sm font-semibold text-white mb-1">{{ produto.nome }}</h3>
-      <p class="text-sm text-gray-300 mb-2">{{ produto.descricao }}</p>
-      <div class="flex items-center justify-between">
-        <span class="text-yellow-400 font-bold">R$ {{ produto.preco }}</span>
-        <button
-          class="flex items-center gap-1 text-sm text-white bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded transition"
-        >
-          <i class="bi bi-cart-plus"></i>
-          Comprar
+      <h3 class="text-sm font-semibold text-gray-800">{{ produto.nome }}</h3>
+      <p class="text-sm text-gray-500 mb-1">{{ produto.descricao }}</p>
+      <div class="flex items-center justify-between mt-2">
+        <span class="text-blue-600 font-bold">R$ {{ produto.preco.toFixed(2) }}</span>
+        <button class="flex items-center gap-1 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded transition">
+          <i class="bi bi-cart-plus"></i> Comprar
         </button>
       </div>
-    </div>
+    </a>
+
   </div>
 </section>

@@ -35,10 +35,15 @@
       </div>
 
       <!-- Carrinho -->
-      <a href="/carrinho" class="relative text-gray-800">
-        <i class="bi bi-cart-fill text-2xl"></i>
-        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">3</span>
-      </a>
+      <a [routerLink]="['/carrinho']" class="relative">
+  <i class="bi bi-cart text-xl"></i>
+  <span *ngIf="cartCount > 0"
+    class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-0.5">
+    {{ cartCount }}
+  </span>
+</a>
+
+
     </div>
   </div>
 

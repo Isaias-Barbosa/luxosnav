@@ -1,0 +1,98 @@
+<app-navbar></app-navbar>
+<app-subnavbar></app-subnavbar>
+
+<div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
+  <!-- 🛍️ Resumo dos produtos -->
+  <div class="md:col-span-2">
+    <h1 class="text-2xl font-bold mb-6">Pagamento 💳</h1>
+
+    <div
+      *ngFor="let item of cart"
+      class="flex items-center gap-4 mb-6 border-b pb-4"
+    >
+      <img
+        [src]="item.imagem"
+        [alt]="item.nome"
+        class="h-20 w-20 object-cover rounded"
+      />
+      <div class="flex-1">
+        <h2 class="text-base font-semibold">{{ item.nome }}</h2>
+        <p class="text-sm text-gray-500">{{ item.categoria }}</p>
+        <p class="text-blue-600 font-bold mt-1">
+          R$ {{ item.preco.toFixed(2) }} x {{ item.quantidade || 1 }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📦 Resumo + Cupom + Parcelamento -->
+  <div class="bg-gray-50 p-6 rounded-lg shadow-sm h-fit space-y-6">
+    <h2 class="text-xl font-semibold">Resumo</h2>
+
+    <!-- Cupom -->
+    <div class="space-y-2">
+      <label class="text-sm font-medium">Cupom de desconto:</label>
+      <input
+        [(ngModel)]="cupom"
+        type="text"
+        placeholder="EXEMPLO10"
+        class="border px-4 py-2 rounded w-full"
+      />
+      <button
+        (click)="aplicarCupom()"
+        class="bg-blue-600 text-white px-4 py-2 rounded w-full"
+      >
+        Aplicar Cupom
+      </button>
+      <div *ngIf="desconto > 0" class="text-sm text-green-600">
+        Cupom aplicado: <strong>R$ {{ desconto.toFixed(2) }}</strong> de
+        desconto!
+      </div>
+    </div>
+
+    <!-- Parcelamento -->
+    <div class="space-y-2">
+      <label class="text-sm font-medium">Parcelamento:</label>
+      <select
+        [(ngModel)]="parcelas"
+        class="border px-3 py-1 rounded text-sm w-full"
+      >
+        <option *ngFor="let p of [1, 2, 3, 6, 12]" [value]="p">{{ p }}x</option>
+      </select>
+      <div class="text-sm text-gray-700">
+        {{ parcelas }}x de
+        <strong>R$ {{ ((subtotal - desconto) / parcelas).toFixed(2) }}</strong>
+        sem juros
+      </div>
+    </div>
+
+    <!-- Total -->
+    <hr />
+    <div class="flex justify-between font-semibold text-gray-900 text-base">
+      <span>Total</span>
+      <span>R$ {{ (subtotal - desconto).toFixed(2) }}</span>
+    </div>
+
+    <button
+      (click)="finalizarCompra()"
+      class="mt-4 bg-green-600 text-white px-6 py-2 rounded w-full hover:bg-green-700 transition"
+    >
+      Finalizar Compra
+    </button>
+      <!-- Endereço de entrega -->
+  <div class="space-y-2 mt-6">
+    <label class="text-sm font-medium text-gray-700"
+      >Endereço de Entrega:</label
+    >
+    <input
+      type="text"
+      disabled
+      class="border px-4 py-2 rounded w-full text-gray-600 bg-gray-100"
+      value="Rua das Flores, 123 - Jardim Primavera, São Paulo/SP - CEP 01234-567"
+    />
+  </div>
+  </div>
+
+</div>
+
+<app-footer></app-footer>

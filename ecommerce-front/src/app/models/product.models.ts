@@ -1,12 +1,16 @@
 export interface Product {
   id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
+  section: string;
+  nome: string;
+  categoria: string;
+  descricao: string;
+  descricaoCompleta: string;
+  preco: number;
+  imagem: string;
+  imagens: string[];
+  tamanhosDisponiveis?: string[];
+  tamanhoSelecionado?: string;
+  quantidade?: number;
+  informacoesTecnicas?: { titulo: string; valor: string }[];
+  avaliacoes?: { nome: string; nota: number; comentario: string }[];
 }
