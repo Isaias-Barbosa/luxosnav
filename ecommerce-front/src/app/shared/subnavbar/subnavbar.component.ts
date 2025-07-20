@@ -8,19 +8,35 @@ import { categoriesMenu } from '../data/categories-menu';
   selector: 'app-subnavbar',
   standalone: true,
   imports: [CommonModule, RouterModule],
-
   templateUrl: './subnavbar.component.html',
   styleUrl: './subnavbar.component.scss',
 })
-export class SubnavbarComponent {
+
+export class SubnavbarComponent  {
   constructor(public authService: AuthService) {}
 
   menuOpen = false;
   activeCategory: string | null = null;
+  categories = categoriesMenu;
+  menuColecoesAberto = false;
+  fechamentoAtrasado: any;
+
 
   toggleCategory(name: string) {
     this.activeCategory = this.activeCategory === name ? null : name;
   }
 
-  categories = categoriesMenu;
+
+abrirMenuColecoes() {
+  clearTimeout(this.fechamentoAtrasado);
+  this.menuColecoesAberto = true;
+}
+
+fecharMenuColecoes() {
+  this.fechamentoAtrasado = setTimeout(() => {
+    this.menuColecoesAberto = false;
+  }, 100); // Tempo de tolerância
+}
+
+
 }

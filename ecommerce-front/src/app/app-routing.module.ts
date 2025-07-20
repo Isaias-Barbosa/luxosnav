@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { ProdutoDetailsComponent } from './components/produto-details/produto-details.component';
+import { ProdutosComponent } from './pages/produtos/produtos.component';
 
 const routes: Routes = [
   {
@@ -13,12 +14,19 @@ const routes: Routes = [
   path: 'carrinho',
   loadComponent: () => import('./cart/cart-view/cart-view.component').then(m => m.CartViewComponent),
 },
-  {
+/* 
+{
     path: 'produtos',
     loadChildren: () =>
       import('./products/products.module').then(m => m.ProductsModule),
     canActivate: [AuthGuard]
   },
+  */
+   {
+  path: 'produtos',
+  component: ProdutosComponent
+    },
+
   {
     path: 'pagamento',
     loadComponent: () =>

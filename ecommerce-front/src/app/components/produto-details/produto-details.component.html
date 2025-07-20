@@ -37,20 +37,30 @@
     </p>
 
     <!-- Seleção de tamanho -->
-    <div *ngIf="product.tamanhosDisponiveis?.length" class="space-y-2">
-      <p class="font-medium text-sm text-gray-700">Tamanho:</p>
-      <div class="flex gap-2 flex-wrap">
-        <button
-          *ngFor="let t of product.tamanhosDisponiveis"
-          (click)="tamanhoSelecionado = t"
-          class="px-3 py-1 border rounded hover:bg-blue-600 hover:text-white transition text-sm"
-          [class.bg-blue-600]="tamanhoSelecionado === t"
-          [class.text-white]="tamanhoSelecionado === t"
-        >
-          {{ t }}
-        </button>
-      </div>
-    </div>
+    <div *ngIf="product.tamanhosDisponiveis?.length || product.numeracaoDisponiveis?.length" class="space-y-2">
+  <p class="font-medium text-sm text-gray-700">Tamanho:</p>
+  <div class="flex gap-2 flex-wrap">
+    <button
+      *ngFor="let t of product.tamanhosDisponiveis"
+      (click)="tamanhoSelecionado = t"
+      class="px-3 py-1 border rounded hover:bg-blue-600 hover:text-white transition text-sm"
+      [class.bg-blue-600]="tamanhoSelecionado === t"
+      [class.text-white]="tamanhoSelecionado === t"
+    >
+      {{ t }}
+    </button>
+    <button
+      *ngFor="let n of product.numeracaoDisponiveis"
+      (click)="tamanhoSelecionado = n"
+      class="px-3 py-1 border rounded hover:bg-blue-600 hover:text-white transition text-sm"
+      [class.bg-blue-600]="tamanhoSelecionado === n"
+      [class.text-white]="tamanhoSelecionado === n"
+    >
+      {{ n }}
+    </button>
+  </div>
+</div>
+
 
     <!-- Simulador de frete -->
     <div class="space-y-2 mt-4 max-w-sm">

@@ -1,0 +1,116 @@
+<app-navbar></app-navbar>
+<app-subnavbar></app-subnavbar>
+<br />
+<div class="flex">
+  <!-- Aside com categorias -->
+  <aside class="w-64 p-4 border-r space-y-6 bg-gray-50">
+  <!-- Campo de busca -->
+   <button (click)="limparFiltros()" class="bg-gray-200 hover:bg-gray-300 text-sm px-4 py-2 rounded w-full mt-4">
+  Limpar Filtros
+  </button>
+
+  <div>
+    <h3 class="font-bold mb-2">Buscar</h3>
+    <input [(ngModel)]="buscaTermo" (input)="filtrarProdutos()" placeholder="Digite o nome..." class="w-full border rounded px-3 py-2" />
+  </div>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h4 class="font-semibold mb-2">Faixa de Preço</h4>
+         <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Preço Mínimo</label>
+      <input
+        type="number"
+        [(ngModel)]="precoMin"
+        (input)="filtrarProdutos()"
+        placeholder="Ex: 50"
+        class="w-full border rounded px-3 py-2 text-sm"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Preço Máximo</label>
+      <input
+        type="number"
+        [(ngModel)]="precoMax"
+        (input)="filtrarProdutos()"
+        placeholder="Ex: 500"
+        class="w-full border rounded px-3 py-2 text-sm"
+      />
+    </div>
+  </div>
+</div>
+
+
+  <!-- Filtros por categoria -->
+  <div *ngFor="let cat of ['Camisas', 'Calçados', 'Bermudas', 'Acessórios']" class="bg-white p-4 rounded shadow">
+    <h4 class="font-semibold mb-2">{{ cat }}</h4>
+
+    <!-- Tamanhos -->
+    <div *ngIf="cat === 'Camisas' || cat === 'Bermudas'">
+      <p class="text-sm font-medium mb-1">Tamanhos</p>
+      <div *ngFor="let t of tamanhosDisponiveis">
+        <label class="flex items-center gap-2 text-sm">
+          <input 
+          type="checkbox"
+          (change)="toggleTamanho(t)" 
+          [checked]="tamanhosSelecionados.includes(t)" 
+          /> {{ t }}
+        </label>
+      </div>
+    </div>
+
+    <div *ngIf="cat === 'Calçados'">
+      <p class="text-sm font-medium mb-1">Numeração</p>
+     <div *ngFor="let n of numeracaoDisponiveis">
+        <label class="flex items-center gap-2 text-sm">
+           <input 
+           type="checkbox" 
+           (change)="toggleNumeracao(n)" 
+           [checked]="numeracaoSelecionado.includes(n)" 
+           /> {{ n}}
+
+        </label>
+      </div>
+    </div>
+
+    <!-- Marcas -->
+    <p class="text-sm font-medium mt-3 mb-1">Marcas</p>
+   <div *ngFor="let marca of marcasDisponiveis">
+      <label class="flex items-center gap-2 text-sm">
+        <input 
+        type="checkbox" 
+        (change)="toggleMarca(marca)"
+        [checked]="marcasSelecionadas.includes(marca)"
+         /> {{ marca }}
+      </label>
+    </div>
+  </div>
+</aside>
+
+  <!-- Grid de produtos -->
+  <section class="w-full lg:w-[calc(100%-10rem)] p-6">
+    <h2 class="text-xl font-semibold mb-4">Produtos</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <a *ngFor="let produto of produtosFiltrados" [routerLink]="['/produto', produto.id]" class="relative border p-3 rounded shadow hover:scale-[1.02] transition">
+        <img [src]="produto.imagem" alt="{{ produto.nome }}" class="mb-2 w-full aspect-[5/5] object-cover rounded" />
+        <!-- Selo de destaque -->
+        <span *ngIf="produto.novo" class="absolute top-5 left-5 bg-green-600 text-white text-xs px-2 py-1 rounded">Novo</span>
+        <span *ngIf="produto.promocao" class="absolute top-5 right-5 bg-red-600 text-white text-xs px-2 py-1 rounded">Promoção</span>
+
+        <h4 class="font-medium">{{ produto.nome }}</h4>
+        <p class="text-xs text-gray-500 italic">Marca: {{ produto.marca }}</p>
+        <p class="text-sm text-gray-600">{{ produto.descricao }}</p>
+        <div class="flex items-center justify-between mt-4">
+          <span class="text-blue-600 font-bold">R$ {{ produto.preco.toFixed(2) }}</span>
+          <button
+            class="flex items-center gap-1 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded transition">
+            <i class="bi bi-cart-plus"></i> Comprar
+          </button>
+        </div>
+        
+      </a>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>

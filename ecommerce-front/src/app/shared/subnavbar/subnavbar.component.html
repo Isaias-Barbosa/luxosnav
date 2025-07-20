@@ -15,11 +15,11 @@
         Coleções ▾
       </button>
       <ul *ngIf="activeCategory === 'colecoes'" class="mt-1 pl-4 space-y-1">
+        <li><a href="/todos-produtos">Todos os Produtos</a></li>
         <li><a href="/colecao-inverno">Coleção Inverno</a></li>
         <li><a href="/na-moda">Na Moda</a></li>
         <li><a href="/em-alta">Em Alta</a></li>
         <li><a href="/colecoes-geral">Coleções Geral</a></li>
-        <li><a href="/todos-produtos">Todos os Produtos</a></li>
       </ul>
     </div>
 
@@ -44,18 +44,36 @@
   <!-- Desktop Menu -->
   <div class="hidden lg:flex items-center gap-6 justify-between w-full">
     <!-- Menu: Coleções -->
-    <div class="relative group">
-      <button class="flex items-center gap-2 text-gray-700 font-semibold">
-        <i class="bi bi-list text-lg"></i> Coleções ▾
-      </button>
-      <ul
-        class="absolute left-0 mt-2 w-48 bg-white border rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 text-sm"
-      >
-        <li><a href="/colecao-inverno" class="block px-4 py-2 hover:bg-gray-100">Coleção Inverno</a></li>
+<!-- Coleções: ativado por hover, renderizado com ngIf -->
+<div 
+  class="relative"
+  (mouseenter)="abrirMenuColecoes()" 
+  (mouseleave)="fecharMenuColecoes()"
+>
+  <button 
+    class="flex items-center gap-2 text-gray-700 font-semibold">
+    <i class="bi bi-list text-lg"></i> Coleções 
+    <i 
+      class="bi bi-chevron-down text-sm transition-transform duration-200"
+      [style.transform]="menuColecoesAberto ? 'rotate(180deg)' : 'rotate(0deg)'"
+    ></i>
+  </button>
+
+
+
+
+      <!-- Dropdown visível enquanto o grupo está com hover -->
+  <!-- Dropdown visível apenas quando aberto -->
+    <ul 
+    *ngIf="menuColecoesAberto"
+    class="absolute left-0 top-full mt-2 w-48 bg-white border rounded shadow-md z-10 text-sm flex-col transition-all duration-200"
+  >
+
+         <li><a [routerLink]="['/produtos']"  class="block px-4 py-2 hover:bg-gray-100">Todos os Produtos</a></li>
+         <li><a [routerLink]="['/produtos']" [queryParams]="{ section: 'inverno' }" class="block px-4 py-2 hover:bg-gray-100">Coleção Inverno</a></li>
         <li><a href="/na-moda" class="block px-4 py-2 hover:bg-gray-100">Na Moda</a></li>
         <li><a href="/em-alta" class="block px-4 py-2 hover:bg-gray-100">Em Alta</a></li>
         <li><a href="/colecoes-geral" class="block px-4 py-2 hover:bg-gray-100">Coleções Geral</a></li>
-        <li><a href="/todos-produtos" class="block px-4 py-2 hover:bg-gray-100">Todos os Produtos</a></li>
       </ul>
     </div>
 
