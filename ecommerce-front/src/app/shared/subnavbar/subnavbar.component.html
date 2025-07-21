@@ -15,8 +15,8 @@
         Coleções ▾
       </button>
       <ul *ngIf="activeCategory === 'colecoes'" class="mt-1 pl-4 space-y-1">
-        <li><a href="/todos-produtos">Todos os Produtos</a></li>
-        <li><a href="/colecao-inverno">Coleção Inverno</a></li>
+        <li><a [routerLink]="['/produtos']"  class="block hover:bg-gray-100">Todos os Produtos</a></li>
+        <li><a [routerLink]="['/produtos']" [queryParams]="{ section: 'inverno' }" class="block hover:bg-gray-100">Coleção Inverno</a></li>
         <li><a href="/na-moda">Na Moda</a></li>
         <li><a href="/em-alta">Em Alta</a></li>
         <li><a href="/colecoes-geral">Coleções Geral</a></li>
@@ -59,10 +59,7 @@
     ></i>
   </button>
 
-
-
-
-      <!-- Dropdown visível enquanto o grupo está com hover -->
+  <!-- Dropdown visível enquanto o grupo está com hover -->
   <!-- Dropdown visível apenas quando aberto -->
     <ul 
     *ngIf="menuColecoesAberto"
